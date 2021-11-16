@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>To-Do List</title>
+	<style type="text/css">
+		.content {
+			max-width: 400px;
+			max-height: 600px;
+			margin: auto;
+			background: #f3f3f3;
+			height: 450px;
+			padding: 3%;
+			border: 1px solid;
+		}
+
+		.content h1 {
+			text-align: center;
+			font-family: Garamond;
+		}
+
+		input[type=text] {
+			width: 80%;
+			height: 30px;
+			margin-bottom: 10px;
+		}
+
+		input[type=button] {
+			border: none;
+			width: 17%;
+			float: right;
+			height: 35px;
+		}
+
+		button:hover, input[type=button]:hover {
+			background: #ccc;
+		}
+
+		button, input[type=button] {
+			cursor: pointer;
+		}
+
+		button {
+			float: right;
+			width: 26px;
+			padding: 4px;
+		}
+
+		ul {
+			list-style-type: none;
+			padding:  10px;
+			height: 250px;
+			background: #fff;
+			overflow-y: auto;
+		}
+
+		li {
+			height: 40px;
+			margin: 15px 0 15px 0;
+			border-bottom: 1px solid;
+			font-family: Arial;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="content">
+		<div class="row">
+			<div class="col-12">
+				<h1>To-Do List</h1>
+				<form>
+					<input type="text" name="task" id='task' placeholder="Novo Item..."/>
+					<input type="button" name="" value='Adicionar' onclick="addTask()"/>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="todo-list-box">
+					<ul id="myList">
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+
+	//receber ul
+	var ul = document.getElementById("myList");
+	var li;
+	var itemId;
+	var item;
+
+	//adicionar tarefa
+	addTask = function() {
+		if(document.getElementById("task").value != "") {
+			//iremos passar o id que irá ser
+			//a quantidade máxima de itens da lista
+			item = document.getElementById("task");
+			itemId = ul.childElementCount;
+			li = createItemEl(item.value, itemId);
+			li.appendChild(createRemoveTaskBtn(itemId));
+			ul.appendChild(li);
+			item.value = "";
+		}
+	} 
+
+	//remover tarefa
+	removeTask = function(itemId) {
+		for(i = 0; i < ul.children.length; i++) {
+			if(ul.children[i].getAttribute("index") == itemId) {
+				ul.children[i].remove();
+			}
+		}
+	}
+
+	//criar elemento item
+	createItemEl = function(itemValue, itemId) {
+		let li = document.createElement("li");
+		li.setAttribute("index", itemId);
+		li.appendChild(document.createTextNode(itemValue));
+		return li;
+	}
+
+	//btn = button
+	createRemoveTaskBtn = function(itemId) {
+		let btn = document.createElement("button");
+		btn.setAttribute("onclick", "removeTask("+itemId+")");
+		btn.innerHTML = "x";
+		return btn;
+	}
+
+
+</script>
+</body>
+</html>
